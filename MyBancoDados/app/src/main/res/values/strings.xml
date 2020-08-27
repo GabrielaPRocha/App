@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyBancoDados</string>
+    <array name="generos">
+    <item>Ação</item>
+    <item>Bibliografia</item>
+    <item>Ficção</item>
+    <item>Romance</item>
+    </array>
+</resources>
