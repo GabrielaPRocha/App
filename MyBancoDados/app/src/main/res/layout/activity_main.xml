@@ -51,7 +51,7 @@
             android:inputType="number" />
 
         <Button
-            android:id="@+id/idAdicione"
+            android:id="@+id/Adicione"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -61,7 +61,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/idVisualizar"
+            android:id="@+id/Visualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

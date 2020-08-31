@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String NOME_BANCO_DADOS = "empresa.db";
     EditText txtNome, txtPrecos;
     Spinner Generos;
-    Button idAdicione, idVisualizar;
+    Button Adicione, idVisualizar;
     SQLiteDatabase meuBancoDados;
 
     @Override
@@ -24,15 +24,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         txtNome = findViewById(R.id.txtNome);
         txtPrecos = findViewById(R.id.txtPrecos);
-        idAdicione = findViewById(R.id.idAdicione);
-        idAdicione.setOnClickListener(this);
+        Adicione = findViewById(R.id.Adicione);
+        Adicione.setOnClickListener(this);
         idVisualizar.setOnClickListener(this);
         meuBancoDados = openOrCreateDatabase(NOME_BANCO_DADOS, MODE_PRIVATE, null);
         criarTabelaLivros();
         Toast.makeText(getApplicationContext(), "Livro adicionado com exito", Toast.LENGTH_SHORT);
-    }
 
-        private void criarTabelaLivros(){
+    }private boolean verificarEntrada(String nome, String preco) {
+        if(nome.isEmpty()){
+            txtEditarLivro.setError("Nome está vazio!");
+            txtEditarLivro.requestFocus();
+            return false;
+        }
+
+        if(preco.isEmpty()){
+            txtEditarPreco.setErro("Esta sem preço");
+            txtEditarPreco.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    private void adiconarLivros(){
+
+        String nomeLiv = txtNomeLivro.getText().toString().trim();
+        String precoLiv = txtPrecos.getText().toString().trim();
+        String generoLiv = Generos.getSelectedItem().toString();
+
+        // obtendo o horário atual para data de inclusão
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String dataEntrada = simpleDateFormat.format(calendar.getTime());
+        if (verificarEntrada(nomeEmpr, salarioEmpr)) {
+
+            String insertSQL = "INSERT INTO funcionarios (" +
+                    "nome, " +
+                    "genero, " +
+                    "dataEntrada," +
+                    "preco)" +
+                    "VALUES(?, ?, ?, ?);";
+
+
+            meuBancoDeDados.execSQL(insertSQL, new String[]{nomeLiv, generoLiv, dataEntrada, precoLiv});
+
+            Toast.makeText(getApplicationContext(), "Livro adiconado com exito!!!", Toast.LENGTH_SHORT).show();
+        }
+
+    private void criarTabelaLivros(){
         meuBancoDados.execSQL(
             "CREATE TABLE IF NOT EXISTS livros("+
                     "id integer PRIMARY KEY AUTOINCREMENT,"+
@@ -44,9 +83,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-    @Override
-    public void onClick(View v) {
-    }}
 
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.Adicione:
+                    adicioneLivros();
+                    break;
+                case R.id.Visualizar:
+                    startActivity(new Intent(getApplicationContext(), Funcionarios_Activity.class));
+                    break;
+            }
 
-
+        }
+    }
